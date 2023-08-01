@@ -25,14 +25,14 @@ tap.test('#getGroupMembershipForDN()', t => {
   settings.groups.forEach((group) => {
     t.test(`should return groups (with nested groups) for ${group.dn}`, t => {
       const opts = { supportNestedGroups: true }
-      const expectedGroups = [...group.groups, ...group.nestedGroups]
+      const expectedGroups = [...group.groups, ...group.nestedGroups].sort()
       t.context.ad.getGroupMembershipForDN(opts, group.dn, undefined, function (err, groups) {
         t.error(err)
         t.ok(groups)
         t.type(groups, Array)
 
-        const cns = groups.map((g) => g.cn)
-        expectedGroups.forEach(group => t.true(cns.includes(group)))
+        const actualGroups = groups.map((g) => g.cn).sort()
+        t.strictSame(actualGroups, expectedGroups)
 
         t.end()
       })
@@ -40,14 +40,14 @@ tap.test('#getGroupMembershipForDN()', t => {
 
     t.test(`should return groups (without nested groups) for ${group.dn}`, t => {
       const opts = { supportNestedGroups: false }
-      const expectedGroups = group.groups
+      const expectedGroups = group.groups.sort()
       t.context.ad.getGroupMembershipForDN(opts, group.dn, undefined, function (err, groups) {
         t.error(err)
         t.ok(groups)
         t.type(groups, Array)
 
-        const cns = groups.map((g) => g.cn)
-        expectedGroups.forEach(group => t.true(cns.includes(group)))
+        const actualGroups = groups.map((g) => g.cn).sort()
+        t.strictSame(actualGroups, expectedGroups)
 
         t.end()
       })
