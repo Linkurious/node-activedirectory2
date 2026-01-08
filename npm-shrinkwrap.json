@@ -1,12 +1,12 @@
 {
   "name": "@linkurious/activedirectory2",
-  "version": "2.3.1",
+  "version": "2.3.2",
   "lockfileVersion": 3,
   "requires": true,
   "packages": {
     "": {
       "name": "@linkurious/activedirectory2",
-      "version": "2.3.1",
+      "version": "2.3.2",
       "license": "MIT",
       "dependencies": {
         "abstract-logging": "2.0.1",
